@@ -46,16 +46,25 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             echo 'Erreur : ', $e->getMessage(), "\n";
         }
     }
+
+    if (isset($_POST['delete'])) {
+        unlink($_POST['filename']);
+        $valide = "Votre fichier à bien été supprimé !";
+    }
 }
 ?>
 
-<form action="" method="post" enctype="multipart/form-data">
+<form action="#" method="post" enctype="multipart/form-data">
     <input type="file" name="avatar" id="imageUpload" /><br><br><br>
     <button name="send">Envoyer</button>
 </form>
 
 <?php
 echo "<h1>Liste des fichiers sur le serveur :</h1> <br><br>";
+
+if (isset($valide)) {
+    echo "<h3>" . $valide . "</h3>";
+}
 
 $fileList = glob('files/*');
 
@@ -64,6 +73,12 @@ foreach ($fileList as $filename) {
         echo "<br><br>Nom du fichier : <p style='color:red;'>" . $filename, '</p><br>';
         echo "Aperçu : <br><br>
         <img src='$filename' style='width:30%'>";
+?>
+        <form action="#" method="post">
+            <input type="hidden" name="filename" value="<?= $filename ?>">
+            <button name="delete">Supprimer</button>
+        </form>
+<?php
     }
 }
 ?>
