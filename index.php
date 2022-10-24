@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $errors[] = "L'image n'existe pas";
     } elseif (filesize($fileWidth > $maxFileSize)) {
         $errors[] = "Le poids de l'image est trop grande !";
-    } elseif (!file_exists('files/' . $fileName)) {
+    } elseif (!file_exists($uploadFile)) {
         #Upload
         try {
             move_uploaded_file($fileTmp, $uploadFile);
